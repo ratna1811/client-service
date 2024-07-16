@@ -1,22 +1,22 @@
 package com.learning.employee_client_service.service;
 
-import java.util.Arrays;
-import java.util.List;
-
+import com.learning.employee_client_service.dto.EmployeeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.learning.employee_client_service.dto.EmployeeDTO;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class EmployeeService {
-    @Autowired
-    private RestTemplate restTemplate;
 
-    @Value("${data-service-url}")
-    private String baseUrl;
+    @Autowired
+    RestTemplate restTemplate;
+
+    @Value("${data.service.url}")
+    String baseUrl;
 
     public List<EmployeeDTO> getAllEmployees() {
         return Arrays.asList(restTemplate.getForObject(baseUrl, EmployeeDTO[].class));
@@ -35,7 +35,7 @@ public class EmployeeService {
         return getEmployeeById(id);
     }
 
-    public void deleteEmployeeById(Long id) {
+    public void deleteEmployee(Long id) {
         restTemplate.delete(baseUrl + "/" + id);
     }
 }
